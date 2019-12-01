@@ -1,0 +1,6 @@
+/* I have trouble reading the monospaced text on the question pages, so I made this custom stylesheet for myself. */
+body { font-family: sans-serif; }
+* { text-shadow: none !important; }
+h1, h2, article em { font-weight: bold; }
+header, article~p, article~form  { text-align: center; }
+article { width: 36em; line-height: 1.3; margin-left: auto; margin-right: auto; }
