@@ -50,6 +50,7 @@
         p2 (plot-path path2)
         m1 (first-occurrence-map p1)
         m2 (first-occurrence-map p2)]
+    ; Filter m2 down to points that also occur in m1, and sum their delays.
     (keep
       (fn [[point i]]
         (let [j (get m1 point)]
@@ -75,5 +76,5 @@
 
 (def path1 (parse-path (read-line)))
 (def path2 (parse-path (read-line)))
-(printf "shortest intersection distance = %d%n" (shortest-intersection-distance path1 path2))
-(printf "minimal intersection delay     = %d%n" (minimal-intersection-delay path1 path2))
+(printf "*  shortest intersection distance = %d%n" (shortest-intersection-distance path1 path2))
+(printf "** minimal intersection delay     = %d%n" (minimal-intersection-delay path1 path2))
