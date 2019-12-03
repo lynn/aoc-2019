@@ -1,6 +1,5 @@
 ; https://adventofcode.com/2019/day/3 in Clojure
 ; Provide input as two lines on STDIN. Try it online: https://tio.run/#clojure
-(require 'clojure.set)
 
 ; (parse-direction "R") ==> [1 0]
 (defn parse-direction [direction-string]
@@ -32,8 +31,7 @@
 (defn plot-path [path]
   (->> path
     (mapcat expand-leg)
-    (reductions point-add)
-  ))
+    (reductions point-add)))
 
 ; (first-occurrence-map '(:a :b :c :a :b :d)) ==> {:a 1, :b 2, :c 3, :d 6}
 ; Note the "1-indexed" result.
@@ -43,7 +41,7 @@
     {}
     (map vector xs (iterate inc 1))))
 
-; Return a list of [x y sum-of-shortest-delays] for all intersections.
+; Return a sequence of [[x y] sum-of-delays], for all intersections.
 ; (path-intersections (parse-path "R3,U1") (parse-path "U4,R3,D3")) ==> '([[3 -1] 14])
 (defn path-intersections [path1 path2]
   (let [p1 (plot-path path1)
