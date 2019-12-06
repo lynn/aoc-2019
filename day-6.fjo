@@ -1,0 +1,118 @@
+;; https://adventofcode.com/2019/day/6 in Fjölnir.
+;;
+;; 1. Get the DOS source: http://www.hi.is/~snorri/087133-03/fjolnir.zip
+;; 2. Convert this file to CP861 (Icelandic):
+;;
+;;        cat day-6.fjo | iconv -f utf8 -t cp861 > A.FJO
+;;
+;; 3. Compile and run from DOS:
+;;
+;;        CD EIN
+;;        ..\BIN\FJOLNIR.EXE A.FJO
+;;        A.EXE < INPUT.TXT
+;;
+
+"day6" < main
+{
+main ->
+  stef(;)
+  staðvær line, i, j, k
+  staðvær orbit, child, parent
+  staðvær num_orbits_lo := 0, num_orbits_hi := 0
+  staðvær COM := planet(;'C','O','M')
+  staðvær YOU := planet(;'Y','O','U')
+  staðvær SAN := planet(;'S','A','N')
+  staðvær you_path, path_length
+  stofn
+    ;; "orbit" maps planet numbers (in base-36) to their parents.
+    ;; This look-up table needs size 36*36*36 = 46656.
+    ;; A hlunkur's max size is 8192, so we make a hlunkur of 36 smaller hlunkar.
+    orbit := \hlunkur 36,
+    fyrir (i := 0; i < 36; i := i+1) lykkja
+      orbit[i] := \hlunkur 1296,
+    lykkjulok,
+
+    ;; Read input.
+    lykkja
+      line := lesalínu(;),
+      ef line = [] þá út eflok,
+      child := planet(;line[5],line[6],line[7]),
+      parent := planet(;line[1],line[2],line[3]),
+      orbit[child/1296][child%1296] := parent,
+    lykkjulok,
+
+    ;; (*) Count orbits.
+    fyrir (i := 0; i < 36*36*36; i := i+1) lykkja
+      ef orbit[i/1296][i%1296] þá
+        j := i,
+        meðan j <> COM lykkja
+          ef num_orbits_lo = 65535 þá num_orbits_hi := num_orbits_hi + 1 eflok,
+          num_orbits_lo := num_orbits_lo + 1,
+          j := orbit[j/1296][j%1296],
+        lykkjulok,
+      eflok,
+    lykkjulok,
+
+    ;; (**) Find a path from YOU to SAN.
+    ;; We follow the paths from both to COM.
+    ;; When we find a common ancestor in the orbit tree,
+    ;; we sum the heights of that ancestor relative to both YOU and SAN.
+    you_path := \hlunkur 1024,
+    i := 0,
+    j := orbit[YOU/1296][YOU%1296],
+    meðan j <> COM og j <> [] lykkja
+      you_path[i] := j,
+      j := orbit[j/1296][j%1296],
+      i := i + 1,
+    lykkjulok,
+    i := 0,
+    j := orbit[SAN/1296][SAN%1296],
+    meðan j <> COM lykkja
+      fyrir (k := 0; you_path[k]; k := k + 1) lykkja
+        ef you_path[k] = j þá
+          ;; We found the common ancestor.
+          path_length := k + i,
+          út,
+        eflok,
+        ef path_length þá út eflok,
+      lykkjulok,
+      j := orbit[j/1296][j%1296],
+      i := i + 1,
+    lykkjulok,
+
+    ;; Print output.
+    skrifastreng(;"*  "),
+    skrifafjöl(;num_orbits_hi),
+    skrifastreng(;"*65536+"),
+    skrifafjöl(;num_orbits_lo),
+    skrifastreng(;" orbits."),
+    nýlína(;),
+    skrifastreng(;"** "),
+    skrifafjöl(;path_length),
+    skrifastreng(;" transfers to reach Santa."),
+    nýlína(;),
+  stofnlok
+}
+*
+{
+planet ->
+  stef(;a,b,c)
+  stofn
+    36*36*digit(;a) + 36*digit(;b) + digit(;c),
+  stofnlok
+}
+*
+{
+digit ->
+  stef(;ch)
+  stofn
+    ef 'A' <= ch og ch <= 'Z' þá
+      skila ch - 'A' + 10,
+    annars
+      skila ch - '0',
+    eflok
+  stofnlok
+}
+*
+"GRUNNUR"
+;
