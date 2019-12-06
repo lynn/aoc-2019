@@ -1,6 +1,6 @@
 ;; https://adventofcode.com/2019/day/6 in Fjölnir.
 ;;
-;; 1. Get the DOS source: http://www.hi.is/~snorri/087133-03/fjolnir.zip
+;; 1. Get the DOS compiler: http://www.hi.is/~snorri/087133-03/fjolnir.zip
 ;; 2. Convert this file to CP861 (Icelandic):
 ;;
 ;;        cat day-6.fjo | iconv -f utf8 -t cp861 > A.FJO
