@@ -1,0 +1,18 @@
+https://adventofcode.com/2019/day/10 as Jelly answers.
+https://github.com/DennisMitchell/jelly/
+
+Passing the input to my code for *:
+
+    g/RṖx2×€:g/
+    _©Ç€µe€€®Ẹ€CS’
+    Ỵ=”#ŒṪµç€`żµṀ
+
+prints [260, [18, 15]].
+
+Then, passing the input and [18, 15] to my code for **:
+
+    Ỵ=”#ŒṪ_⁴µẸƇ:g/$€ĠịµæA@/€NµÞÆḊÞ€ZẎ200ị+⁴U’ḅ100
+
+prints 608.
+
+(Here is a hasty explanation: https://gist.github.com/lynn/91e221845625907a2b1b004dba0a1a68)
