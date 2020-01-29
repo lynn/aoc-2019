@@ -1,4 +1,4 @@
-https://adventofcode.com/2019/day/10 as Jelly answers.
+https://adventofcode.com/2019/day/10 in Jelly.
 https://github.com/DennisMitchell/jelly/
 
 Passing the input to my code for *:
@@ -16,3 +16,7 @@ Then, passing the input and [18, 15] to my code for **:
 prints 608.
 
 (Here is a hasty explanation: https://gist.github.com/lynn/91e221845625907a2b1b004dba0a1a68)
+
+Jelly is a tacit code-golf language.
+Its syntax resembles APL or J, but it's read from left to right.
+This code maybe looks like noise, but it's just compact: g means "gcd", / means "fold", R means "range", etc.
